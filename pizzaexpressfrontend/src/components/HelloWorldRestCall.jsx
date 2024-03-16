@@ -3,12 +3,10 @@ import axios from "axios"
 function  callHelloWorld(){
     console.log('called again')
 
-    axios.get('http://localhost:8080/pizza/getPizzas')
+    axios.get('http://localhost:8080/pizza/getAllPizzas')
     .then( (response) => successfullResponse(response) )
     .catch( (error) => errorResponse(error) )
     .finally( () => console.log('cleanup') )
-
-
 }
 
 function successfullResponse(response){
