@@ -1,7 +1,8 @@
 import React, { useState, useEffect } from 'react';
-import DataTable from './DataTable';
 import axios from "axios";
 import pizzaImage from '../images/pizza_salami.jpg';
+import { BrowserRouter as Router, Route, Link, Routes } from 'react-router-dom';
+import CheckoutComponent from './CheckoutComponent';
 
 function retrieveAllPizzas(setPizzas){
     axios.get('http://localhost:8080/pizza/getAllPizzas')
@@ -34,6 +35,20 @@ const FirstComponent = () => {
   console.log(basket);
  };
 
+function sendOrder(){
+  console.log(basket);
+  axios.post('http://localhost:8080/pizza/sendOrder',basket)
+  .then( (response) => successfullSendOrder(response.data) )
+  .catch( (error) => errorResponse(error) )
+  .finally( () => console.log('cleanup') )
+}
+
+function successfullSendOrder(response){
+  console.log(response);
+}
+
+
+
   return (
     <div>
         <h1>My Data Table</h1>
@@ -61,8 +76,7 @@ const FirstComponent = () => {
             </td>
             <td><img src={pizzaImage} alt="Pizza" id="small-image"/></td>
             <td>
-                {/* Button to add item to basket */}
-                <button onClick={() => addItemToBasket(item)}>Add to Basket</button>
+            <button onClick={() => addItemToBasket(item)}>Add to Basket</button>
               </td>              
           </tr>
         ))}
@@ -72,6 +86,7 @@ const FirstComponent = () => {
       <thead>
         <tr>
           <th>Warenkorb</th>
+          <th><button onClick={sendOrder}>Bestellung abschicken</button></th>
         </tr>
       </thead>
       <tbody>
@@ -85,9 +100,14 @@ const FirstComponent = () => {
         
       </tbody>            
     </table>
-        
+    
     </div>
+          
+            
+			
   );
+
+ 
 };
 
 export default FirstComponent;
