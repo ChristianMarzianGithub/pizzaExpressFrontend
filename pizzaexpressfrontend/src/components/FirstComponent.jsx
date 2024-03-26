@@ -3,6 +3,7 @@ import axios from "axios";
 import pizzaImage from '../images/pizza_salami.jpg';
 import { BrowserRouter as Router, Route, Link, Routes } from 'react-router-dom';
 import CheckoutComponent from './CheckoutComponent';
+import {useNavigate} from 'react-router-dom'
 
 function retrieveAllPizzas(setPizzas){
     axios.get('http://localhost:8080/pizza/getAllPizzas')
@@ -28,6 +29,7 @@ const FirstComponent = () => {
 
   // Define state to manage the basket items
  const [basket, setBasket] = useState([]);
+ const navigate = useNavigate();
 
  // Function to add an item to the basket
  const addItemToBasket = (item) => {
@@ -47,7 +49,9 @@ function successfullSendOrder(response){
   console.log(response);
 }
 
-
+function navigateToCheckout() {
+  navigate(`/checkout?basket=${JSON.stringify(basket)}`);
+}
 
   return (
     <div>
@@ -87,6 +91,7 @@ function successfullSendOrder(response){
         <tr>
           <th>Warenkorb</th>
           <th><button onClick={sendOrder}>Bestellung abschicken</button></th>
+          <th><button onClick={navigateToCheckout}>zur Kasse</button></th>
         </tr>
       </thead>
       <tbody>

@@ -6,7 +6,13 @@ import CheckoutComponent from './components/CheckoutComponent';
 function App() {
   return (
     <div>
-       <FirstComponent/>
+      <BrowserRouter>
+        <Routes>
+          <Route path='/start' element={ <FirstComponent /> } />
+          <Route path='/checkout' element={ <CheckoutComponent /> } />
+        </Routes>    
+      </BrowserRouter>
+      
     </div>
   );
 }
